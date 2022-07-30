@@ -14,7 +14,7 @@ Matrix Mul(Matrix A, Matrix B)
     for (int i = 1; i <= n; i++)
         for (int j = 1; j <= m; j++)
             for (int t = 1; t <= k; t++)
-                C.a[i][j] = (C.a[i][j] + A.a[i][t] * B.a[t][j]) % mod;
+                C.a[i][j] = (C.a[i][j] + (A.a[i][t] * B.a[t][j]) % mod) % mod;
     return C;
 }
 
