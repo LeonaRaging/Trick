@@ -37,7 +37,7 @@ bool FindPath(int src, int snk) {
             }
         }
     }
-    return (dis[snk] != dis[0]);
+    return (dis[snk] != dis[N - 1]);
 }
 
 int MinCost(int src, int snk) {
