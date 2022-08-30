@@ -35,55 +35,31 @@ int n, par[maxn + 10], a[maxn + 10];
 set<int> adj[maxn + 10];
 vector<pair<int,int>> edges;
 
-void dfs(int u, int p) {
-	par[u] = p;
-	for (auto v : adj[u]) {
-		if (v == p) continue;
-		dfs(v, u);
-	}
-}
-
-bool ok() {
-	if (n == 0) return false;
-	for (int i = 1; i <= n; i++) if (i < par[i]) return false;
-	return true;
-}
-
 signed main()
 {
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	//freopen(".INP", "r", stdin);
-	//freopen(".OUT", "w", stdout);
- 	mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
- 		edges.clear();
- 		for (int i = 1; i <= n; i++) adj[i].clear(), par[i] = 0;
-	 	n = mt() % maxn + 1;
-	 	ds.init(n);
-	 	while(1) {
-	 		int u = mt() % n + 1;
-	 		int v = mt() % n + 1;
-	 		if (u > v) swap(u, v);
-	 		if (ds.join(u, v)) {
-	 			adj[u].insert(v);
-	 			adj[v].insert(u);
-	 			edges.pb({u, v});
-	 		}
-	 		int cnt = 0, x = ds.find(1);
-	 		for (int i = 1; i <= n; i++) if (ds.find(i) == x) cnt++;
-	 		if (cnt == n) break;
-	 	}
-	 	dfs(1, 0);
-	 	cout << n << '\n';
-	 	for (int i = 1; i <= n; i++) {
-	 		int x = mt() % INF;
-	 		a[i] = x;
-	 		// cout << a[i] << ' ' << par[i] << '\n';
-	 	}
-	 	for (auto it : edges) {
-	 		int u, v; tie(u, v) = it;
-	 		cout << u << ' ' << v << '\n';
-	 		// cout << u << ' ' << v << ' ' << (par[u] == v ? a[u] : a[v]) << '\n';
-	 	}
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    //freopen(".INP", "r", stdin);
+    //freopen(".OUT", "w", stdout);
+    mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
+    edges.clear();
+    for (int i = 1; i <= n; i++) adj[i].clear(), par[i] = 0;
+    n = mt() % maxn + 1;
+    ds.init(n);
+    while(1) {
+        int u = mt() % n + 1;
+        int v = mt() % n + 1;
+        if (u > v) swap(u, v);
+        if (ds.join(u, v)) {
+            adj[u].insert(v);
+            adj[v].insert(u);
+            edges.pb({u, v});
+        }
+        if (ds.Rank[ds.find(1)] == n) break;
+    }
+    cout << n << '\n';
+    for (auto it : edges) {
+        int u, v; tie(u, v) = it;
+        cout << u << ' ' << v << '\n';
+    }
 }
-
