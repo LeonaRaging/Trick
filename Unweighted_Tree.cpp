@@ -7,7 +7,7 @@
 #define db(val) "[" #val " = " << (val) << "] "
 using namespace std;
 const ll mod = 20;
-const int maxn = 10;
+const int maxn = 20;
 const int INF = 10;
 
 struct Dsu {
@@ -35,16 +35,21 @@ int n, par[maxn + 10], a[maxn + 10];
 set<int> adj[maxn + 10];
 vector<pair<int,int>> edges;
 
+mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
+
+int get(int l, int r) {
+    return l + mt() % (r - l + 1);
+}
+
 signed main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     //freopen(".INP", "r", stdin);
     //freopen(".OUT", "w", stdout);
-    mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
     edges.clear();
     for (int i = 1; i <= n; i++) adj[i].clear(), par[i] = 0;
-    n = mt() % maxn + 1;
+    n = 10;
     ds.init(n);
     while(1) {
         int u = mt() % n + 1;
