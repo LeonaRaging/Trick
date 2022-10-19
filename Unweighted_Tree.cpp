@@ -32,7 +32,7 @@ struct Dsu {
 } ds;
 
 int n, par[maxn + 10], a[maxn + 10];
-set<int> adj[maxn + 10];
+vector<int> adj[maxn + 10];
 vector<pair<int,int>> edges;
 
 mt19937 mt(chrono::steady_clock::now().time_since_epoch().count());
@@ -51,20 +51,14 @@ signed main()
     for (int i = 1; i <= n; i++) adj[i].clear(), par[i] = 0;
     n = 10;
     ds.init(n);
-    while(1) {
-        int u = mt() % n + 1;
-        int v = mt() % n + 1;
-        if (u > v) swap(u, v);
-        if (ds.join(u, v)) {
-            adj[u].insert(v);
-            adj[v].insert(u);
-            edges.pb({u, v});
-        }
-        if (ds.Rank[ds.find(1)] == n) break;
-    }
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            edges.pb({i, j});
+    shuffle(edges.begin(), edges.end(), mt);
+    vector<pair<int,int>> res;
+    for (auto it : edges)
+        if (ds.join(it.fi, it.se))
+            res.pb({it.fi, it.se});
     cout << n << '\n';
-    for (auto it : edges) {
-        int u, v; tie(u, v) = it;
-        cout << u << ' ' << v << '\n';
-    }
+    for (auto i : res) cout << i.fi << ' ' << i.se << '\n';
 }
