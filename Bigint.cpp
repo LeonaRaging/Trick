@@ -65,6 +65,7 @@ struct bigint {
     }
 
     void operator*=(int v) {
+        a.clear();
         if (v < 0)
             sign = -sign, v = -v;
         for (int i = 0, carry = 0; i < (int) a.size() || carry; ++i) {
