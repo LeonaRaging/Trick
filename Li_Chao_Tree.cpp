@@ -29,7 +29,7 @@ struct seg_tree {
 			update(val, l, r, 2 * v + 1, m + 1, tr);
 		}
 	}
-	int get(int pos, int v, int l = 1, int r = maxn - 1) {
+	int get(int pos, int v = 1, int l = 1, int r = maxn - 1) {
 		int res = f(t[v], pos);
 		if (l == r) return res;
 		int m = (l + r) / 2;
