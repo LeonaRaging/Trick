@@ -13,7 +13,7 @@ struct seg_tree {
 	seg_tree() {
 		t.resize(4 * maxn);
 	}
-	void update(line val, int l = 1, int r = maxn - 1, int v = 1, int tl = 1, int tr = maxn - 1) {
+	void update(int l, int r, line val, int v = 1, int tl = 1, int tr = maxn - 1) {
 		if (tl > r || tr < l) return;
 		int m = (tl + tr) / 2;
 		if (tl >= l && tr <= r) {
@@ -21,15 +21,15 @@ struct seg_tree {
 			bool mid = f(val, m) > f(t[v], m);
 			if (mid) swap(t[v], val);
 			if (tl == tr) return;
-			if (lef != mid) update(val, l, r, 2 * v, tl, m);
-			else update(val, l, r, 2 * v + 1, m + 1, tr);
+			if (lef != mid) update(l, r, val, 2 * v, tl, m);
+			else update(l, r, val, 2 * v + 1, m + 1, tr);
 		}
 		else {
-			update(val, l, r, 2 * v, tl, m);
-			update(val, l, r, 2 * v + 1, m + 1, tr);
+			update(l, r, val, 2 * v, tl, m);
+			update(l, r, val, 2 * v + 1, m + 1, tr);
 		}
 	}
-	int get(int pos, int v, int l = 1, int r = maxn - 1) {
+	int get(int pos, int v = 1, int l = 1, int r = maxn - 1) {
 		int res = f(t[v], pos);
 		if (l == r) return res;
 		int m = (l + r) / 2;
