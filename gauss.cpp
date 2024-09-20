@@ -1,40 +1,66 @@
-int gauss (vector < vector<int> > a) {
+#include <bits/stdc++.h>
+using namespace std;
+
+#define db(val) "[" #val " = " << (val) << "] "
+
+const int maxn = 1e5 + 4;
+
+const double EPS = 1e-9;
+const int INF = 2;
+
+int gauss (vector < vector<double> > a, vector<double> & ans) {
     int n = (int) a.size();
     int m = (int) a[0].size() - 1;
+
     vector<int> where (m, -1);
     for (int col=0, row=0; col<m && row<n; ++col) {
         int sel = row;
         for (int i=row; i<n; ++i)
             if (abs (a[i][col]) > abs (a[sel][col]))
                 sel = i;
-        if (abs (a[sel][col]) == 0)
+        if (abs (a[sel][col]) < EPS)
             continue;
         for (int i=col; i<=m; ++i)
             swap (a[sel][i], a[row][i]);
         where[col] = row;
+
         for (int i=0; i<n; ++i)
             if (i != row) {
-                int c = a[i][col] / a[row][col];
+                double c = a[i][col] / a[row][col];
                 for (int j=col; j<=m; ++j)
                     a[i][j] -= a[row][j] * c;
             }
         ++row;
     }
-	vector<int> ans;
-	int res = 0;
+
     ans.assign (m, 0);
     for (int i=0; i<m; ++i)
         if (where[i] != -1)
             ans[i] = a[where[i]][m] / a[where[i]][i];
-        else res++;
     for (int i=0; i<n; ++i) {
-        int sum = 0;
+        double sum = 0;
         for (int j=0; j<m; ++j)
             sum += ans[j] * a[i][j];
-        if (sum % 3 != a[i][m] % 3) {
-        	cout << 0;
-        	exit(0);
-        }
+        if (abs (sum - a[i][m]) > EPS)
+            return 0;
     }
-    return res;
+
+    for (int i=0; i<m; ++i)
+        if (where[i] == -1)
+            return INF;
+    return 1;
 }
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    int n, m; cin >> n >> m;
+    vector<vector<double>> a(n, vector<double>(m, 0));
+    for (int i = 0; i < n; i++)
+    	for (int j = 0; j < m; j++)
+    		cin >> a[i][j];
+    vector<double> ans;
+    gauss(a, ans);
+    for (auto x : ans) cout << fixed << setprecision(2) << x << ' ';
+}
+
