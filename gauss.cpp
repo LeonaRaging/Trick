@@ -31,6 +31,10 @@ int gauss (vector < vector<double> > a, vector<double> & ans) {
                     a[i][j] -= a[row][j] * c;
             }
         ++row;
+        for (int i = 0; i < n; i++)
+        	for (int j = 0; j <= m; j++)
+        		clog << fixed << setprecision(2) << a[i][j] << (j == m ? '\n' : ' ');
+        clog << '\n';
     }
 
     ans.assign (m, 0);
