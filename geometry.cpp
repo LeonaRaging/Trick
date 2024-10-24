@@ -39,7 +39,6 @@ struct line {
 	bool cmpProj(pt p, pt q) {
 		return dot(v, p) < dot(v, q);
 	}
-	
 };
 
 bool isPerp(pt v, pt w) {return dot(v, w) == 0;}
